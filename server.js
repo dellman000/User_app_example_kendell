@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
-PORT = 3333
+const path=require('path')
+console.log(path.join(__dirname,'./public/index.html'))
+PORT = process.env.PORT ||3000
 
 
 const data = [
@@ -21,11 +23,12 @@ const data = [
         name: 'BOB'
     }
 ]
-
+// create a git route fro evey file in public
+app.use(express.static('./public'))
 
 // creates a route for the user to vist the address domains
 app.get('/', function (request, response) {
-    response.send("Hello User. Im the server")
+    response.sendFile(path.join(__dirname,'./public/index.html'))
 })
 
 app.get('/api/:user_id', function (request, response) {
