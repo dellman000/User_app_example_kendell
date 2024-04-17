@@ -18,6 +18,46 @@
         </p>
         <p class="route"> <span> Get /api/users/:ID</span> Return a single user by Id</p>
     </div>
+
+    <form  id="form">
+        <button> Submit</button>
+        <input id="name" name="fullName" type="text" placeholder="name">
+        <input id="age" name="age" type="text" placeholder="age">
+    </form>
+
+    <script>
+        // fetch('/about').then((obj) => {
+        //     return obj.json()
+        // }
+        // ).then(((obj) => {
+        //     console.log(obj)
+        // }))
+            function AddData (event){
+                event.preventDefault()
+                const getName=document.getElementById('name').value 
+                const getAge=document.getElementById('age').value 
+                console.log(getName)
+
+
+                fetch('/add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                name: getName,
+                age:getAge
+            })
+        }).then((obj) => { 
+            document.getElementById('name').value =''
+            document.getElementById('age').value =''
+            return obj.json() }).
+            then(data => { console.log(data) })
+            }
+           const form= document.getElementById('form')
+           console.log(form) 
+            form.addEventListener('submit',AddData)
+
+            // AddData()
+    </script>
 </body>
 
 </html>

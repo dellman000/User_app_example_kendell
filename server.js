@@ -1,72 +1,25 @@
 const express = require('express');
+
 const app = express();
+
 const path=require('path')
 console.log(path.join(__dirname,'./public/index.html'))
-PORT = process.env.PORT ||3000
+const PORT = process.env.PORT ||3000
 
 
-const data = [
-    {
-        id: 1,
-        name: 'Kendell'
-    },
-    {
-        id: 2,
-        name: 'JD'
-    },
-    {
-        id: 3,
-        name: 'Jim'
-    },
-    {
-        id: 4,
-        name: 'BOB'
-    }
-]
+const api_routes = require('./routes/api_routes')
 // create a git route fro evey file in public
 app.use(express.static('./public'))
+app.use(express.json())
+//Allow URL data to be sent through routes
+app.use(express.urlencoded({extended:false}))
+// allow JSON to be sent through our routes
+// load routes
+app.use('/', api_routes)
 
 // creates a route for the user to vist the address domains
-app.get('/', function (request, response) {
-    response.sendFile(path.join(__dirname,'./public/index.html'))
-})
-
-app.get('/api/:user_id', function (request, response) {
-    
-    const id=request.params.user_id;
-    const obj=data.find((element)=>{ 
-    if(element.id == id){
-        return true
-    }})
-    if(obj){
-        response.json(obj)
-    }
-    // response.send("User not found")
-})
 
 
-
-app.get('/data', function (request, response) {
-    const queryParms = request.query
-    console.log(queryParms)
-    //create an empty object
-    const obj = {
-        // name:"Kendell",age:27
-    }
-    //If they request the name {name:'true'}, then we add the preperty
-    if (queryParms.name === 'true') {
-        obj.name = 'Kendell Rennie'
-    }
-    //If they request the name {age:'true'}, then we add the preperty
-    if (queryParms.age === 'true') {
-        obj.age = '27'
-    }
-    response.json(obj)
-})
-
-app.get('/about', function (request, response) {
-    response.send("Hello User. Im the server and this is the about page")
-})
 
 
 app.listen(PORT, () => {

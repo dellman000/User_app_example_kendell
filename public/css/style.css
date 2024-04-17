@@ -2,3 +2,22 @@ body{
     background-color: #555;
     color: white;
 }
+
+form{
+    width: 400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+input, button {
+    border:none;
+    border-radius: 3px;
+}
+form button > *{
+    padding: 7px 10px;
+    margin-bottom: 6px;
+}
+
+button {
+    cursor: pointer;
+}
